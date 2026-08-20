@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>最新消息｜快樂國小家長網</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="js/tailwind-config.js"></script>
+    <link rel="stylesheet" href="css/styles.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="js/news.js"></script>
+    <script src="js/nav.js"></script>
+</head>
+<body class="bg-coffee-50 font-sans text-coffee-800 antialiased min-h-screen flex"
+      x-data="newsData()"
+      x-init="$watch('currentPage', () => setTimeout(() => refreshIcons(), 50));
+              $watch('isModalOpen', () => setTimeout(() => refreshIcons(), 50));">
+
+    <div id="sidebar-overlay" class="fixed inset-0 bg-coffee-900/40 z-40 hidden md:hidden"></div>
+
+    <aside id="site-sidebar"
+           class="fixed md:sticky top-0 left-0 z-50 md:z-30 h-screen w-64 bg-white border-r border-coffee-200 flex flex-col shrink-0 -translate-x-full md:translate-x-0 transition-transform duration-200">
+        <div class="px-5 py-4 border-b border-coffee-200 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-3 font-bold text-coffee-900">
+                <div class="w-6 h-6 rounded-full border-2 border-coffee-800 flex items-center justify-center">
+                    <div class="w-2 h-2 bg-coffee-800 rounded-full"></div>
+                </div>
+                <span class="text-base leading-tight">快樂國小家長網</span>
+            </a>
+            <button id="sidebar-close" type="button" class="md:hidden p-1.5 rounded-lg text-coffee-500 hover:bg-coffee-100" aria-label="關閉選單">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+        </div>
+        <nav data-site-nav class="p-3 flex flex-col gap-1 overflow-y-auto"></nav>
+    </aside>
+
+    <div class="flex-1 flex flex-col min-w-0 min-h-screen">
+    <header class="bg-white border-b border-coffee-200 px-4 md:px-6 py-4 shadow-sm flex items-center gap-3 sticky top-0 z-30">
+        <button id="sidebar-open" type="button" class="md:hidden p-1.5 rounded-lg text-coffee-700 hover:bg-coffee-100" aria-label="開啟選單">
+            <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
+        <h1 data-page-title class="font-bold text-lg text-coffee-900"></h1>
+    </header>
+
+    <main class="flex-1 w-full max-w-5xl mx-auto p-4 md:p-8 overflow-hidden flex flex-col">
+        <div class="mb-6 bg-amber-50 border-l-4 border-amber-500 text-amber-900 px-4 py-3 rounded-r-lg shadow-sm flex items-center shrink-0">
+            <i data-lucide="alert-triangle" class="w-5 h-5 text-amber-600 mr-3 shrink-0"></i>
+            <div class="marquee-container flex-1">
+                <div class="animate-marquee inline-block text-sm font-medium w-full">
+                    <span class="font-bold text-amber-700 mr-1">【緊急公告】</span>
+                    因應強烈颱風來襲，依據市府指示，本校明日（8/20）全面停止上班上課。請家長留意學童居家安全，並隨時關注本系統最新動態。
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white border border-coffee-200 rounded-xl shadow-sm flex flex-col flex-1 overflow-hidden">
+            <div class="p-0 overflow-y-auto flex-1">
+                <div class="flex flex-col h-full">
+                    <div class="p-4 border-b border-coffee-100 flex items-center justify-between bg-white shrink-0">
+                        <span class="text-sm font-semibold text-coffee-800">最新消息列表</span>
+                        <a href="https://example.com/school-news" target="_blank"
+                           class="inline-flex items-center gap-1.5 bg-coffee-800 hover:bg-coffee-700 text-white text-xs font-medium px-3 py-2 rounded-lg transition-colors shadow-sm">
+                            學校最新消息
+                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+                        </a>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-coffee-50/30 text-xs text-coffee-500 uppercase tracking-wider border-b border-coffee-200">
+                                    <th class="px-6 py-3 font-medium w-32 shrink-0">發布日期</th>
+                                    <th class="px-6 py-3 font-medium w-28 shrink-0">分類</th>
+                                    <th class="px-6 py-3 font-medium">標題內容</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-sm divide-y divide-coffee-100">
+                                <template x-for="news in paginatedNews" :key="news.id">
+                                    <tr @click="openNewsModal(news)" class="hover:bg-coffee-50/60 transition-colors cursor-pointer">
+                                        <td class="px-6 py-4 text-coffee-500 whitespace-nowrap" x-text="news.date"></td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span :class="{
+                                                    'bg-amber-100 text-amber-800 border-amber-200': news.type === '學校',
+                                                    'bg-emerald-100 text-emerald-800 border-emerald-200': news.type === '班級'
+                                                  }"
+                                                  class="inline-flex items-center px-2 py-0.5 rounded border text-xs font-medium"
+                                                  x-text="news.type">
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <span class="font-medium text-coffee-900 hover:text-coffee-600 transition-colors" x-text="news.title"></span>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="p-4 border-t border-coffee-200 bg-coffee-50/30 flex items-center justify-between mt-auto">
+                        <p class="text-sm text-coffee-500">
+                            顯示第 <span class="font-medium text-coffee-900" x-text="((currentPage - 1) * itemsPerPage) + 1"></span> 到
+                            <span class="font-medium text-coffee-900" x-text="Math.min(currentPage * itemsPerPage, newsItems.length)"></span> 筆，
+                            共 <span class="font-medium text-coffee-900" x-text="newsItems.length"></span> 筆消息
+                        </p>
+                        <div class="flex gap-2">
+                            <button @click="currentPage--" :disabled="currentPage === 1"
+                                    class="px-3 py-1 border border-coffee-200 rounded text-sm text-coffee-700 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white transition-colors">
+                                上一頁
+                            </button>
+                            <button @click="currentPage++" :disabled="currentPage === totalPages"
+                                    class="px-3 py-1 border border-coffee-200 rounded text-sm text-coffee-700 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white transition-colors">
+                                下一頁
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div x-show="isModalOpen"
+         x-cloak
+         class="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-coffee-900/50 backdrop-blur-sm"
+         x-transition:enter="transition ease-out duration-200"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition ease-in duration-150"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0">
+
+        <div @click.away="closeNewsModal()"
+             class="bg-white rounded-2xl shadow-xl border border-coffee-200 w-full max-w-lg overflow-hidden flex flex-col max-h-[85vh]">
+
+            <div class="p-4 border-b border-coffee-100 flex items-center justify-between bg-coffee-50/50">
+                <div class="flex items-center gap-2">
+                    <span :class="{
+                            'bg-amber-100 text-amber-800 border-amber-200': selectedNews?.type === '學校',
+                            'bg-emerald-100 text-emerald-800 border-emerald-200': selectedNews?.type === '班級'
+                          }"
+                          class="px-2 py-0.5 rounded border text-xs font-medium"
+                          x-text="selectedNews?.type"></span>
+                    <span class="text-xs text-coffee-500" x-text="selectedNews?.date"></span>
+                </div>
+                <button @click="closeNewsModal()" class="text-coffee-400 hover:text-coffee-600 p-1 rounded-lg hover:bg-coffee-100 transition-colors">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <div class="p-6 overflow-y-auto space-y-4">
+                <h3 class="text-lg font-bold text-coffee-900 leading-snug" x-text="selectedNews?.title"></h3>
+                <div class="text-sm text-coffee-700 leading-relaxed space-y-2 whitespace-pre-line" x-text="selectedNews?.content || '暫無詳細內容。'"></div>
+
+                <template x-if="selectedNews?.url">
+                    <div class="pt-3 border-t border-coffee-100">
+                        <a :href="selectedNews.url" target="_blank"
+                           class="inline-flex items-center justify-center gap-2 bg-coffee-800 hover:bg-coffee-700 text-white text-xs font-medium px-4 py-2.5 rounded-lg transition-colors shadow-sm w-full">
+                            <span>開啟相關外部連結附件</span>
+                            <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                        </a>
+                    </div>
+                </template>
+            </div>
+
+            <div class="p-4 border-t border-coffee-100 bg-coffee-50/30 text-right">
+                <button @click="closeNewsModal()" class="px-4 py-2 bg-coffee-100 hover:bg-coffee-200 text-coffee-800 rounded-lg text-sm font-medium transition-colors">
+                    關閉視窗
+                </button>
+            </div>
+        </div>
+    </div>
+
+    </div>
+    <script src="js/icons.js"></script>
+</body>
+</html>
