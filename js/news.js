@@ -15,59 +15,43 @@ function newsData() {
             this.selectedNews = null;
         },
 
+        // 把 content 裡的換行變成真正的斷行，並允許插入 <img>
+        formatNewsContent(content) {
+            if (!content) return '暫無詳細內容。';
+            return String(content).replace(/\n/g, '<br>');
+        },
+
+        /*
+          如何新增一則消息：複製下面整筆，改 id（不可重複）、date、type、title、content、url。
+          type 只能填「學校」或「班級」。
+          url 沒有外部連結就填 ''。
+
+          內文 content 請用反引號 ` ` 包起來，這樣才能換行。
+          換行：直接按 Enter。
+          插入圖片：把圖檔放到 images 資料夾，然後寫
+            <img src="images/檔名.jpg" alt="圖片說明">
+        */
         newsItems: [
             {
                 id: 1,
-                date: '2026-08-19',
+                date: '2026-08-20',
                 type: '學校',
-                title: '【重要公告】因颱風來襲明日全面停課',
-                content: '因應強烈颱風將於今晚侵襲，依據市府災害應變中心宣佈，本校明日（8/20）全面停止上班上課。請家長協助提醒學童留在家中切勿外出，確保個人安全。',
-                url: 'https://example.com/typhoon-notice'
+                title: '115學年度親師座談：9/19 (六) 8:00-12:00 邀請公告 (無論是否參加，請於 9/30 前填寫完畢)',
+                content: `親愛的家長：您好！
+
+為了讓您能夠了解學校的發展與規劃，以及您的子弟在校的生活與學習情形，謹訂於115年9月19日（星期六）上午8:00舉辦家長親師座談會，誠摯的邀請您一起來關心下一代。有您的加入，相信基隆商工及您的子女一定會更好！
+
+國立基隆高級商工職業學校 敬上
+
+＊時間：115年9月19日（星期六）上午08:00～12:00
+＊地點：本校活動中心
+＊為響應環保，請家長自備環保杯
+＊本校停車位有限，請盡量搭乘大眾交通工具
+＊請點擊以下連結填寫表單`,
+                img: "images/親師座談會.jpg",
+                img_alt: "親師座談",
+                url: 'https://docs.google.com/forms/d/e/1FAIpQLSfXTJN1qi4NYRoJMgSmqbXGujBXA76A1O26m2cKLxBehabU2Q/viewform'
             },
-            {
-                id: 2,
-                date: '2026-08-15',
-                type: '學校',
-                title: '112學年度下學期期中考時程表',
-                content: '本次期中考試將於下週三至週四舉行，請各位家長留意考試範圍與複習進度。相關科目日程請參閱學校通訊。',
-                url: 'https://example.com/exam-schedule'
-            },
-            {
-                id: 3,
-                date: '2026-08-10',
-                type: '學校',
-                title: '校園流感疫苗接種意願書發放通知',
-                content: '衛生所預定於下月進行學童流感疫苗接種，今日已將意願書發給各班學生，請家長簽署後於本週五前由學生繳回。',
-                url: 'https://example.com/vaccine-form'
-            },
-            {
-                id: 4,
-                date: '2026-08-05',
-                type: '班級',
-                title: '三年2班戶外教學行前準備清單',
-                content: '親愛的家長您好，下週二為本班校外教學日，請協助學童準備：便當、水壺、雨具與防蚊液，並穿著學校體育服。',
-                url: ''
-            },
-            {
-                id: 5,
-                date: '2026-07-28',
-                type: '班級',
-                title: '班級親師交流會預備事項通知',
-                content: '本學期親師交流會預計於本週六上午 09:00 於本班教室舉辦，歡迎各位家長踴躍參與。',
-                url: 'https://example.com/pt-meeting'
-            },
-            { id: 6, date: '2026-07-20', type: '學校', title: '暑期輔導課程異動通知', content: '暑期課程相關調整事項說明。', url: '' },
-            { id: 7, date: '2026-07-15', type: '學校', title: '防範腸病毒，請假標準與消毒作業說明', content: '衛生宣導與請假停課規定說明。', url: 'https://example.com/health' },
-            { id: 8, date: '2026-07-10', type: '班級', title: '班級讀書會圖書借閱調查', content: '請協助確認學童本月讀書會欲借閱之書單。', url: '' },
-            { id: 9, date: '2026-07-05', type: '學校', title: '反詐騙宣導講座線上報名', content: '邀請專家蒞校主講網路安全與反詐騙觀念。', url: 'https://example.com/signup' },
-            { id: 10, date: '2026-06-30', type: '學校', title: '結業式時間與下學期註冊時程', content: '本學期結業相關時程安排。', url: '' },
-            { id: 11, date: '2026-06-25', type: '班級', title: '期末班級同樂會準備物品提醒', content: '請當日攜帶自行準備之環保餐具與小點心。', url: '' },
-            { id: 12, date: '2026-06-18', type: '學校', title: '期末考成績單寄發時間', content: '成績單寄發通知說明。', url: '' },
-            { id: 13, date: '2026-06-15', type: '學校', title: '夏季制服換季相關規定', content: '換季日期與服儀規範通知。', url: '' },
-            { id: 14, date: '2026-06-10', type: '學校', title: '全校閱讀週活動起跑', content: '歡迎全校師生與家長共同參與線上閱讀闖關活動。', url: 'https://example.com/read' },
-            { id: 15, date: '2026-06-05', type: '班級', title: '班級自主學習小組分組名單', content: '自主學習組別公告。', url: '' },
-            { id: 16, date: '2026-06-01', type: '學校', title: '端午節連假放假注意事項', content: '祝大家端午佳節愉快。', url: '' },
-            { id: 17, date: '2026-05-28', type: '學校', title: '五月份各項繳費單補發說明', content: '請尚未繳費的家長於期限內補繳。', url: '' },
         ],
 
         get paginatedNews() {

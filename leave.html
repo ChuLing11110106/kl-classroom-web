@@ -1,9 +1,23 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+<!--
+  頁面：請假及規範（leave.html）
+
+  初學者請改這些地方：
+  1. 網站名稱 → 搜尋「基隆商工」
+  2. 跑馬燈公告 → 搜尋「跑馬燈」
+  3. 右上角按鈕文字與網址 → 搜尋「線上請假系統」
+  4. 每一則規範 → 複製下面「一則規範」整塊，再改標題與內容
+
+  左側選單項目請改 js/nav.js。
+  開頭的 <script>、<link> 路徑請不要刪。
+-->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>請假及規範｜基隆商工_美工一班網</title>
+
+    <!-- 字體、樣式、套件：路徑改錯網站會壞掉 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
@@ -17,8 +31,10 @@
 </head>
 <body class="bg-coffee-50 font-sans text-coffee-800 antialiased min-h-screen flex">
 
+    <!-- 手機版選單打開時的暗色背景 -->
     <div id="sidebar-overlay" class="fixed inset-0 bg-coffee-900/40 z-40 hidden md:hidden"></div>
 
+    <!-- ========== 左側選單（選單項目由 js/nav.js 自動產生） ========== -->
     <aside id="site-sidebar"
            class="fixed md:sticky top-0 left-0 z-50 md:z-30 h-screen w-64 bg-white border-r border-coffee-200 flex flex-col shrink-0 -translate-x-full md:translate-x-0 transition-transform duration-200">
         <div class="px-5 py-4 border-b border-coffee-200 flex items-center justify-between">
@@ -36,79 +52,125 @@
     </aside>
 
     <div class="flex-1 flex flex-col min-w-0 min-h-screen">
-    <header class="bg-white border-b border-coffee-200 px-4 md:px-6 py-4 shadow-sm flex items-center gap-3 sticky top-0 z-30">
-        <button id="sidebar-open" type="button" class="md:hidden p-1.5 rounded-lg text-coffee-700 hover:bg-coffee-100" aria-label="開啟選單">
-            <i data-lucide="menu" class="w-5 h-5"></i>
-        </button>
-        <h1 data-page-title class="font-bold text-lg text-coffee-900"></h1>
-    </header>
 
-    <main class="flex-1 w-full max-w-5xl mx-auto p-4 md:p-8 overflow-hidden flex flex-col">
-        <div class="mb-6 bg-amber-50 border-l-4 border-amber-500 text-amber-900 px-4 py-3 rounded-r-lg shadow-sm flex items-center shrink-0">
-            <i data-lucide="alert-triangle" class="w-5 h-5 text-amber-600 mr-3 shrink-0"></i>
-            <div class="marquee-container flex-1">
-                <div class="animate-marquee inline-block text-sm font-medium w-full">
-                    <span class="font-bold text-amber-700 mr-1">【公告】</span>
-                    8/31 為開學日，請穿著制服、攜帶文具準時到校。
+        <!-- 上方標題列：手機才會出現漢堡選單 -->
+        <header class="bg-white border-b border-coffee-200 px-4 md:px-6 py-4 shadow-sm flex items-center gap-3 sticky top-0 z-30">
+            <button id="sidebar-open" type="button" class="md:hidden p-1.5 rounded-lg text-coffee-700 hover:bg-coffee-100" aria-label="開啟選單">
+                <i data-lucide="menu" class="w-5 h-5"></i>
+            </button>
+            <h1 data-page-title class="font-bold text-lg text-coffee-900"></h1>
+        </header>
+
+        <main class="flex-1 w-full max-w-5xl mx-auto p-4 md:p-8 overflow-hidden flex flex-col">
+
+            <!-- 跑馬燈：改這裡的文字即可 -->
+            <div class="mb-6 bg-amber-50 border-l-4 border-amber-500 text-amber-900 px-4 py-3 rounded-r-lg shadow-sm flex items-center shrink-0">
+                <i data-lucide="alert-triangle" class="w-5 h-5 text-amber-600 mr-3 shrink-0"></i>
+                <div class="marquee-container flex-1">
+                    <div class="animate-marquee inline-block text-sm font-medium w-full">
+                        <span class="font-bold text-amber-700 mr-1">【公告】</span>
+                        8/31 為開學日，請穿著制服、攜帶文具準時到校。
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="bg-white border border-coffee-200 rounded-xl shadow-sm flex flex-col flex-1 overflow-hidden">
-            <div class="p-0 overflow-y-auto flex-1">
-                <div class="flex flex-col h-full">
-                    <div class="p-4 border-b border-coffee-100 flex items-center justify-between bg-white shrink-0">
-                        <span class="text-sm font-semibold text-coffee-800">請假流程與規範</span>
-                        <a href="https://example.com/leave-form" target="_blank"
-                           class="inline-flex items-center gap-1.5 bg-coffee-800 hover:bg-coffee-700 text-white text-xs font-medium px-3 py-2 rounded-lg transition-colors shadow-sm">
-                            線上請假系統
-                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
-                        </a>
-                    </div>
+            <!-- ========== 本頁內容：請假規範 ========== -->
+            <div class="bg-white border border-coffee-200 rounded-xl shadow-sm flex flex-col flex-1 overflow-hidden">
+                <div class="p-0 overflow-y-auto flex-1">
+                    <div class="flex flex-col h-full">
 
-                    <div class="p-6 overflow-y-auto">
-                        <div class="max-w-3xl mx-auto" x-data="{ expandedId: 1 }" x-init="$watch('expandedId', () => setTimeout(() => refreshIcons(), 50))">
-                            <h2 class="text-lg font-bold text-coffee-900 mb-4">學童請假流程與規範說明</h2>
+                        <!-- 標題 + 外部連結按鈕（可改文字與 href） -->
+                        <div class="p-4 border-b border-coffee-100 flex items-center justify-between bg-white shrink-0">
+                            <span class="text-sm font-semibold text-coffee-800">請假流程與規範</span>
+                            <a href="https://klcivs-kl.k12ea.gov.tw/SCH_UI/" target="_blank"
+                               class="inline-flex items-center gap-1.5 bg-coffee-800 hover:bg-coffee-700 text-white text-xs font-medium px-3 py-2 rounded-lg transition-colors shadow-sm">
+                                線上請假系統
+                                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+                            </a>
+                        </div>
 
-                            <div class="border border-coffee-200 rounded-lg mb-3 bg-white overflow-hidden shadow-sm">
-                                <button @click="expandedId = expandedId === 1 ? null : 1" class="w-full flex justify-between items-center p-4 text-left bg-coffee-50/50 hover:bg-coffee-50 transition-colors">
-                                    <div class="flex items-center gap-3 pr-4">
-                                        <i data-lucide="thermometer" class="w-5 h-5 text-coffee-500 shrink-0"></i>
-                                        <span class="font-medium text-coffee-900 break-words">病假申請流程與證明規定</span>
-                                    </div>
-                                    <i data-lucide="chevron-down" class="w-5 h-5 text-coffee-400 transition-transform duration-300 shrink-0" :class="expandedId === 1 ? 'rotate-180' : ''"></i>
-                                </button>
-                                <div x-show="expandedId === 1" x-collapse class="border-t border-coffee-100">
-                                    <div class="p-5 text-sm text-coffee-700 leading-relaxed bg-white break-words whitespace-normal">
-                                        <p class="mb-2">學生因病請假，請於當日 <strong class="text-coffee-900">上午 8:00 前</strong> 透過系統或官方 Line 通知導師。</p>
-                                        <ul class="list-disc pl-5 space-y-2 text-coffee-600 mt-2 marker:text-coffee-400">
-                                            <li>單日病假：口頭或文字告知即可。</li>
-                                            <li>連續三日(含)以上：返校後需附上就醫證明（收據或藥袋影本皆可）。若無法提供證明，則依校規記點。</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="p-6 overflow-y-auto">
+                            <!-- expandedId: 數字代表目前展開哪一則。新增一則時，把 1、2 改成不重複的新數字 -->
+                            <div class="max-w-3xl mx-auto" x-data="{ expandedId: 1 }" x-init="$watch('expandedId', () => setTimeout(() => refreshIcons(), 50))">
+                                <h2 class="text-lg font-bold text-coffee-900 mb-4">請假流程與規範說明</h2>
 
-                            <div class="border border-coffee-200 rounded-lg mb-3 bg-white overflow-hidden shadow-sm">
-                                <button @click="expandedId = expandedId === 2 ? null : 2" class="w-full flex justify-between items-center p-4 text-left bg-coffee-50/50 hover:bg-coffee-50 transition-colors">
-                                    <div class="flex items-center gap-3 pr-4">
-                                        <i data-lucide="calendar-clock" class="w-5 h-5 text-coffee-500 shrink-0"></i>
-                                        <span class="font-medium text-coffee-900 break-words">事假提前申請規範</span>
-                                    </div>
-                                    <i data-lucide="chevron-down" class="w-5 h-5 text-coffee-400 transition-transform duration-300 shrink-0" :class="expandedId === 2 ? 'rotate-180' : ''"></i>
-                                </button>
-                                <div x-show="expandedId === 2" x-collapse class="border-t border-coffee-100">
-                                    <div class="p-5 text-sm text-coffee-700 leading-relaxed bg-white break-words whitespace-normal">
-                                        事假需由家長親自透過右上角【線上請假系統】填寫假單，並請於 <strong class="text-coffee-900">「三天前」</strong> 提交給導師簽核。未經核准之臨時事假將視同曠課處理，影響出勤紀錄，敬請家長留意配合。
+                                <!-- 一則規範：編號 1 -->
+                                <div class="border border-coffee-200 rounded-lg mb-3 bg-white overflow-hidden shadow-sm">
+                                    <button @click="expandedId = expandedId === 1 ? null : 1" class="w-full flex justify-between items-center p-4 text-left bg-coffee-50/50 hover:bg-coffee-50 transition-colors">
+                                        <div class="flex items-center gap-3 pr-4">
+                                            <i data-lucide="thermometer" class="w-5 h-5 text-coffee-500 shrink-0"></i>
+                                            <span class="font-medium text-coffee-900 break-words">病假</span>
+                                        </div>
+                                        <i data-lucide="chevron-down" class="w-5 h-5 text-coffee-400 transition-transform duration-300 shrink-0" :class="expandedId === 1 ? 'rotate-180' : ''"></i>
+                                    </button>
+                                    <div x-show="expandedId === 1" x-collapse class="border-t border-coffee-100">
+                                        <div class="p-5 text-sm text-coffee-700 leading-relaxed bg-white break-words whitespace-normal">
+                                            <p class="mb-2">學生因病請假，請於當日 <strong class="text-coffee-900">上午 8:00 前</strong> 請家長透過官方 Line 通知導師。</p>
+                                            <ul class="list-disc pl-5 space-y-2 text-coffee-600 mt-2 marker:text-coffee-400">
+                                                <li>3 天內需檢附看病資料，將假本送至教官室銷假。</li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
+
+                                <!-- 一則規範：編號 2（新增時複製上一則，把 1 全部改成 3） -->
+                                <div class="border border-coffee-200 rounded-lg mb-3 bg-white overflow-hidden shadow-sm">
+                                    <button @click="expandedId = expandedId === 2 ? null : 2" class="w-full flex justify-between items-center p-4 text-left bg-coffee-50/50 hover:bg-coffee-50 transition-colors">
+                                        <div class="flex items-center gap-3 pr-4">
+                                            <i data-lucide="calendar-clock" class="w-5 h-5 text-coffee-500 shrink-0"></i>
+                                            <span class="font-medium text-coffee-900 break-words">事假</span>
+                                        </div>
+                                        <i data-lucide="chevron-down" class="w-5 h-5 text-coffee-400 transition-transform duration-300 shrink-0" :class="expandedId === 2 ? 'rotate-180' : ''"></i>
+                                    </button>
+                                    <div x-show="expandedId === 2" x-collapse class="border-t border-coffee-100">
+                                        <div class="p-5 text-sm text-coffee-700 leading-relaxed bg-white break-words whitespace-normal">
+                                            <strong class="text-coffee-900">需事先完成請假手續</strong>，請於 <strong class="text-coffee-900">3 天前</strong> 提交假單或線上請假給導師簽核。若<strong class="text-coffee-900">臨時有事</strong>，請於當日 <strong class="text-coffee-900">上午 8:00 前</strong> 請家長透過官方 Line 通知導師，並於返校後 <strong class="text-coffee-900">3日內</strong> 備妥家長證明完成請假手續。
+                                        </div>
+                                    </div>
+                                </div>
+
+                                 <!-- 一則規範：編號 3 -->
+                                 <div class="border border-coffee-200 rounded-lg mb-3 bg-white overflow-hidden shadow-sm">
+                                    <button @click="expandedId = expandedId === 3 ? null : 3" class="w-full flex justify-between items-center p-4 text-left bg-coffee-50/50 hover:bg-coffee-50 transition-colors">
+                                        <div class="flex items-center gap-3 pr-4">
+                                            <i data-lucide="door-open" class="w-5 h-5 text-coffee-500 shrink-0"></i>
+                                            <span class="font-medium text-coffee-900 break-words">臨時外出</span>
+                                        </div>
+                                        <i data-lucide="chevron-down" class="w-5 h-5 text-coffee-400 transition-transform duration-300 shrink-0" :class="expandedId === 3 ? 'rotate-180' : ''"></i>
+                                    </button>
+                                    <div x-show="expandedId === 3" x-collapse class="border-t border-coffee-100">
+                                        <div class="p-5 text-sm text-coffee-700 leading-relaxed bg-white break-words whitespace-normal">
+                                            <p class="mb-2">學生因家中臨時有事或身體不舒服想要早退，請至教官室領取外出單，經導師及教官室人員簽名後完成臨時外出單填寫，始可離校。未完成外出單填寫，擅自離校者，以不假離校論處 (大過處分)。</p>
+                                        </div>
+                                    </div>
+                                </div>    
+                                
+                                 <!-- 一則規範：編號 4 -->
+                                 <div class="border border-coffee-200 rounded-lg mb-3 bg-white overflow-hidden shadow-sm">
+                                    <button @click="expandedId = expandedId === 4 ? null : 4" class="w-full flex justify-between items-center p-4 text-left bg-coffee-50/50 hover:bg-coffee-50 transition-colors">
+                                        <div class="flex items-center gap-3 pr-4">
+                                            <i data-lucide="laptop" class="w-5 h-5 text-coffee-500 shrink-0"></i>
+                                            <span class="font-medium text-coffee-900 break-words">線上請假</span>
+                                        </div>
+                                        <i data-lucide="chevron-down" class="w-5 h-5 text-coffee-400 transition-transform duration-300 shrink-0" :class="expandedId === 4 ? 'rotate-180' : ''"></i>
+                                    </button>
+                                    <div x-show="expandedId === 4" x-collapse class="border-t border-coffee-100">
+                                        <div class="p-5 text-sm text-coffee-700 leading-relaxed bg-white break-words whitespace-normal">
+                                            <p class="mb-2">請至 <strong class="text-coffee-900">學校首頁-校務行政系統登入</strong> 附上相關附件，並主動告知導師有提出線上申請。未於 3 天內完成申請，一律退單。</p>
+                                            <ul class="list-disc pl-5 space-y-2 text-coffee-600 mt-2 marker:text-coffee-400">
+                                                <li>系統登入：帳號 (學號)；密碼 (身分證字號)。</li>
+                                                <li>附件請註明：請假日期、學生姓名、事由、家長簽章。</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>                                   
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </main>
+        </main>
     </div>
 
     <script src="js/icons.js"></script>
