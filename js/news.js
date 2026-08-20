@@ -52,13 +52,36 @@ function newsData() {
                 img_alt: "親師座談",
                 url: 'https://docs.google.com/forms/d/e/1FAIpQLSfXTJN1qi4NYRoJMgSmqbXGujBXA76A1O26m2cKLxBehabU2Q/viewform'
             },
+
+            {
+                id: 2,
+                date: '2026-08-20',
+                type: '班級',
+                title: '開學後上下學時間',
+                content: `上學時間：7:30 進班進行技術士證晨練
+                放學時間：週一~週三 16:50 放學 (課業輔導-第二週起)、週四~週五 16:00 放學`,
+                img: "",
+                img_alt: "",
+                url: ''
+            },            
         ],
 
+        // 自動依日期倒序排列（最新日期在最前面；若日期相同則依 ID 倒序排列）
+        get sortedNews() {
+            return [...this.newsItems].sort((a, b) => {
+                const dateCompare = b.date.localeCompare(a.date);
+                if (dateCompare !== 0) return dateCompare;
+                return b.id - a.id;
+            });
+        },
+
+        // 分頁計算（改用排序後的 sortedNews）
         get paginatedNews() {
             const start = (this.currentPage - 1) * this.itemsPerPage;
             const end = start + this.itemsPerPage;
-            return this.newsItems.slice(start, end);
+            return this.sortedNews.slice(start, end);
         },
+
         get totalPages() {
             return Math.ceil(this.newsItems.length / this.itemsPerPage);
         }
